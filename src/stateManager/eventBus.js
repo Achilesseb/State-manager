@@ -1,18 +1,45 @@
-import { createContext, useContext } from "react";
-import { CounterContext } from "./context";
-import { globalState } from "./reducer";
-import { reducer } from "./reducer";
-import { useDispatch } from "./useDispatch";
+import { useState } from "react";
+import { useCustomHook } from "./usePublishHook";
+import { incrementCount } from "./actions.js";
 
-export const useEventBus = (reducer, initialState) => {
-  let state = initialState;
-  let listeners = [];
-  const subscribe = (listener) => listeners.push(listener);
+let state;
+let allListeners = {
+  message: [],
+};
+let newState;
+
+export const createStore = (reducer, initialState) => {
+  state = initialState;
+
+  const subscribe = (topic, callback) => {
+    allListeners[topic].push(callback);
+    // return () => (allListeners[topic] = []);
+  };
+
+  const dispatch = (topic, data, direction) => {
+    console.log(data);
+    if (direction === "increase")
+      newState = reducer(state, {
+        type: "INCREMENT_COUNT",
+        payload: data + 1,
+      });
+    else if (direction === "decrease")
+      newState = reducer(state, {
+        type: "INCREMENT_COUNT",
+        payload: data - 1,
+      });
+    console.log(newState);
+    console.log(allListeners);
+    allListeners[topic].forEach((listener) => {
+      console.log(newState);
+      listener(newState);
+    });
+  };
   const getState = () => state;
-  const dispatch = useDispatch();
   return {
     subscribe,
     getState,
     dispatch,
+    state,
   };
 };

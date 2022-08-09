@@ -1,12 +1,7 @@
-import { useContext } from "react";
-import { CounterContext } from "./context";
 import { counterChangeTypes as types } from "./types";
-export const useDispatch = () => {
-  const { state, dispatch } = useContext(CounterContext);
+export const useDispatch = (state, dispatch) => {
   return {
-    incrementCount: () =>
-      dispatch({ type: types.INCREMENT_COUNT, payload: state.count + 1 }),
-    decrementCount: () =>
-      dispatch({ type: types.DECREMENT_COUNT, payload: state.count - 1 }),
+    incrementCount: { type: types.INCREMENT_COUNT, payload: state + 1 },
+    decrementCount: { type: types.DECREMENT_COUNT, payload: state - 1 },
   };
 };
