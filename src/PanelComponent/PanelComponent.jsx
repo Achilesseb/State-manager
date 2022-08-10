@@ -25,10 +25,10 @@ const PanelComponent = () => {
       <span className="app-container-span">
         <span>PANEL COMPONENT</span>
         <span>
-          Count 1 : <span className="counter"> {state.count}</span>
+          Count 1 : <span className="counter"> {state?.count}</span>
         </span>
         <span>
-          Count 2 : <span className="counter"> {state.count2}</span>
+          Count 2 : <span className="counter"> {state?.count2}</span>
         </span>
       </span>
     </div>

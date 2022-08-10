@@ -30,7 +30,7 @@ const TestComponent = () => {
         <span>TEST COMPONENT</span>
         <span>
           {" "}
-          Count 2 :<span className="counter"> {state.count2}</span>
+          Count 2 :<span className="counter"> {state?.count2}</span>
         </span>
       </span>
       <button onClick={() => handleDecrementClick2()}>-</button>
