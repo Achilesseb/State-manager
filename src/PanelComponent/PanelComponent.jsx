@@ -1,29 +1,30 @@
 import React from "react";
 import { useEffect } from "react";
-import { createStore } from "../stateManager/eventBus";
-import { globalState, reducer } from "../stateManager/reducer";
 import { useState } from "react";
-const PanelComponent = ({ store }) => {
+import { incrementCount, decrementCount } from "../stateManager/actions";
+import { store } from "../stateManager/eventBus";
+const PanelComponent = () => {
   const { getState, subscribe, dispatch } = store;
   const [state, setState] = useState(getState());
-  const [newState, setNewState] = useState();
   const callback = (data) => {
     setState(data);
   };
   useEffect(() => {
-    console.log("subscribed");
-    return subscribe("message", callback);
+    return subscribe("counter", {
+      name: "panelComponent",
+      callback: callback,
+    });
   }, []);
 
-  const handleClick = (direction) => {
-    dispatch("message", state.count, direction);
-  };
-
+  const handleIncrementClick = () =>
+    dispatch("counter", state.count, incrementCount);
+  const handleDecrementClick = () =>
+    dispatch("counter", state.count, decrementCount);
   return (
     <div>
-      <button onClick={() => handleClick("increase")}>+</button>
-      <span>{state.count}</span>
-      <button onClick={() => handleClick("decrease")}>-</button>
+      <button onClick={() => handleIncrementClick()}>+</button>
+      <span>Counter in Panel Component: {state.count}</span>
+      <button onClick={() => handleDecrementClick()}>-</button>
     </div>
   );
 };

@@ -1,10 +1,12 @@
 import { counterChangeTypes as types } from "./types.js";
-
-export const incrementCount = (action) => ({
-  type: types.INCREMENT_COUNT,
-  payload: action.value,
-});
-export const decrementCount = (action) => ({
-  type: types.DECREMENT_COUNT,
-  action: action.value,
-});
+import { reducer } from "./reducer.js";
+export const incrementCount = (data, state) =>
+  reducer(state, {
+    type: types.INCREMENT_COUNT,
+    payload: data + 1,
+  });
+export const decrementCount = (data, state) =>
+  reducer(state, {
+    type: types.DECREMENT_COUNT,
+    payload: data - 1,
+  });

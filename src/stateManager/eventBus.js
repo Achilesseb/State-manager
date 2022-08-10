@@ -1,38 +1,26 @@
-import { useState } from "react";
-import { useCustomHook } from "./usePublishHook";
-import { incrementCount } from "./actions.js";
-
+import { reducer, globalState } from "./reducer";
 let state;
 let allListeners = {
-  message: [],
+  counter: [],
 };
 let newState;
+const changeCount = (action, state, data) => {
+  newState = action(data, state);
+};
 
-export const createStore = (reducer, initialState) => {
+export const createStore = (initialState) => {
   state = initialState;
-
   const subscribe = (topic, callback) => {
     allListeners[topic].push(callback);
-    // return () => (allListeners[topic] = []);
+    return () =>
+      (allListeners[topic] = allListeners[topic].filter(
+        (listener) => listener.name !== callback.name
+      ));
   };
-
-  const dispatch = (topic, data, direction) => {
-    console.log(data);
-    if (direction === "increase")
-      newState = reducer(state, {
-        type: "INCREMENT_COUNT",
-        payload: data + 1,
-      });
-    else if (direction === "decrease")
-      newState = reducer(state, {
-        type: "INCREMENT_COUNT",
-        payload: data - 1,
-      });
-    console.log(newState);
-    console.log(allListeners);
-    allListeners[topic].forEach((listener) => {
-      console.log(newState);
-      listener(newState);
+  const dispatch = (topic, data, action) => {
+    changeCount(action, state, data);
+    allListeners[topic].forEach(({ callback }) => {
+      callback(newState);
     });
   };
   const getState = () => state;
@@ -40,6 +28,6 @@ export const createStore = (reducer, initialState) => {
     subscribe,
     getState,
     dispatch,
-    state,
   };
 };
+export const store = createStore(reducer, globalState);
