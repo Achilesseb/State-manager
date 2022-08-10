@@ -24,11 +24,14 @@ const TestComponent = () => {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <button onClick={() => handleIncrementClick2()}>+</button>
-      <span>
-        Test Component
-        <span> Count_2 : {state.count2}</span>
+      <span className="app-container-span">
+        <span>TEST COMPONENT</span>
+        <span>
+          {" "}
+          Count 2 :<span className="counter"> {state.count2}</span>
+        </span>
       </span>
       <button onClick={() => handleDecrementClick2()}>-</button>
     </div>

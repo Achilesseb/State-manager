@@ -1,6 +1,6 @@
 export const globalState = {
   count: 0,
-  count2: 1,
+  count2: 100,
 };
 
 export const reducer = (state = globalState, action) => {

@@ -23,11 +23,11 @@ export const createStore = (initialState) => {
     if (topic === "counter") changeCount(action, state, data);
     if (topic === "initialState") newState = data;
     allListeners[topic].forEach(({ callback }) => {
-      callback(newState);
+      callback(newState, data);
     });
   };
   const getState = () => state;
-
+  
   return {
     subscribe,
     getState,
@@ -36,6 +36,6 @@ export const createStore = (initialState) => {
 };
 
 export const store = createStore(globalState);
-// export const saveToLocalStorage = (state) => {
-//   localStorage.setItem("counter", JSON.stringify(state));
-// };
+export const saveToLocalStorage = (state) => {
+  localStorage.setItem("counter", JSON.stringify(state));
+};

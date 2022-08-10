@@ -36,3 +36,48 @@
     transform: rotate(360deg);
   }
 }
+.app-container {
+  border: 5px inset white;
+  width: 60vw;
+  height: 25vh;
+  font-family: "Courier New", Courier, monospace;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 2px;
+}
+.app-container-span {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3vh;
+}
+button {
+  height: 5vw;
+  width: 5vw;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  color: white;
+  border: 3px groove white;
+  border-radius: 5px;
+  text-shadow: 2px 2px 3px black;
+}
+.reset-button {
+  font-size: 1em;
+  width: auto;
+  padding: 20px;
+  margin-top: 2vh;
+  letter-spacing: 5px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.counter {
+  font-size: 1.5em;
+  color: red;
+  line-height: 1.2;
+  text-shadow: 1px 1px 2px white;
+}

@@ -3,13 +3,11 @@ import React, { useEffect, useState } from "react";
 import PanelComponent from "./PanelComponent/PanelComponent";
 import TestComponent from "./PanelComponent/TestCountComponent";
 import { store } from "./stateManager/eventBus";
+import { saveToLocalStorage } from "./stateManager/eventBus";
 import { incrementCount, decrementCount, reset } from "./stateManager/actions";
 function App() {
   const { getState, subscribe, dispatch } = store;
   const [state, setState] = useState(getState());
-  const saveToLocalStorage = (state) => {
-    localStorage.setItem("counter", JSON.stringify(state));
-  };
   function callback(data) {
     setState(data);
   }
@@ -39,15 +37,23 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={() => handleIncrementClick()}>+</button>
-        <span>
-          App Component
-          <span> Count_1 : {state.count}</span>
-        </span>
-        <button onClick={() => handleDecrementClick()}>-</button>
+        <div className="app-container">
+          <button onClick={() => handleIncrementClick()}>+</button>
+          <span className="app-container-span">
+            <span>APP COMPONENT</span>
+            <span>
+              {" "}
+              Count 1 :<span className="counter"> {state.count}</span>
+            </span>
+          </span>
+          <button onClick={() => handleDecrementClick()}>-</button>
+        </div>
+
         <PanelComponent />
         <TestComponent />
-        <button onClick={handleReset}>RESET</button>
+        <button className="reset-button" onClick={handleReset}>
+          RESET
+        </button>
       </header>
     </div>
   );
