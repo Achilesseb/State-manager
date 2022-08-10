@@ -1,7 +1,8 @@
-import { reducer, globalState } from "./reducer";
+import { globalState } from "./reducer";
 let state;
 let allListeners = {
   counter: [],
+  initialState: [],
 };
 let newState;
 const changeCount = (action, state, data) => {
@@ -18,16 +19,23 @@ export const createStore = (initialState) => {
       ));
   };
   const dispatch = (topic, data, action) => {
-    changeCount(action, state, data);
+    state = data;
+    if (topic === "counter") changeCount(action, state, data);
+    if (topic === "initialState") newState = data;
     allListeners[topic].forEach(({ callback }) => {
       callback(newState);
     });
   };
   const getState = () => state;
+
   return {
     subscribe,
     getState,
     dispatch,
   };
 };
-export const store = createStore(reducer, globalState);
+
+export const store = createStore(globalState);
+// export const saveToLocalStorage = (state) => {
+//   localStorage.setItem("counter", JSON.stringify(state));
+// };
