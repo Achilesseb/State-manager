@@ -1,34 +1,13 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PanelComponent from "./PanelComponent/PanelComponent";
 import TestComponent from "./PanelComponent/TestCountComponent";
 import { store } from "./stateManager/eventBus";
-import { saveToLocalStorage } from "./stateManager/eventBus";
 import { incrementCount, decrementCount, reset } from "./stateManager/actions";
-import { globalState } from "./stateManager/reducer";
+import { usePublishHook } from "./stateManager/usePublishHook";
 function App() {
-  const { getState, subscribe, dispatch } = store;
-  const [state, setState] = useState(getState());
-  function callback(data) {
-    setState(data);
-  }
-  const localStorageCounter = localStorage.getItem("counter");
-  useEffect(() => {
-    subscribe("initialState", {
-      name: "appComponentInitializeState",
-      callback: callback,
-    });
-    if (localStorageCounter === undefined || localStorageCounter === null)
-      dispatch("initialState", globalState);
-    else dispatch("initialState", JSON.parse(localStorage.getItem("counter")));
-    return subscribe("counter", {
-      name: "appComponent",
-      callback: callback,
-    });
-  }, []);
-  useEffect(() => {
-    return saveToLocalStorage(state);
-  });
+  const { dispatch } = store;
+  const state = usePublishHook();
   const handleIncrementClick = () => {
     dispatch("counter", state, incrementCount);
   };
@@ -47,7 +26,7 @@ function App() {
             <span>APP COMPONENT</span>
             <span>
               {" "}
-              Count 1 :<span className="counter"> {state?.count}</span>
+              Count 1 :<span className="counter"> {state.count}</span>
             </span>
           </span>
           <button onClick={() => handleDecrementClick()}>-</button>

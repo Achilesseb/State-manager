@@ -1,21 +1,10 @@
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
 import { store } from "../stateManager/eventBus";
 import { incrementCount2, decrementCount2 } from "../stateManager/actions";
+import { usePublishHook } from "../stateManager/usePublishHook";
 const TestComponent = () => {
-  const { getState, subscribe, dispatch } = store;
-  const [state, setState] = useState(getState());
-  const callback = (data) => {
-    setState(data);
-  };
-  useEffect(() => {
-    subscribe("initialState", {
-      name: "appComponentInitializeState",
-      callback: callback,
-    });
-    return subscribe("counter", { name: "testComponent", callback: callback });
-  }, []);
+  const { dispatch } = store;
+  const state = usePublishHook();
   const handleIncrementClick2 = () => {
     dispatch("counter", state, incrementCount2);
   };
@@ -30,7 +19,7 @@ const TestComponent = () => {
         <span>TEST COMPONENT</span>
         <span>
           {" "}
-          Count 2 :<span className="counter"> {state?.count2}</span>
+          Count 2 :<span className="counter"> {state.count2}</span>
         </span>
       </span>
       <button onClick={() => handleDecrementClick2()}>-</button>

@@ -1,11 +1,18 @@
 import { useState } from "react";
-export const usePublishHook = (currentState, newState) => {
-  console.log(currentState);
-  const [state, setState] = useState(currentState);
-  console.log(state);
-  let callback = (newState) => {
-    console.log(newState);
-    return setState(newState);
-  };
+import { store } from "./eventBus";
+import { useEffect } from "react";
+import { saveToLocalStorage } from "./eventBus";
+export const usePublishHook = () => {
+  const { getState, subscribe } = store;
+  const [state, setState] = useState(getState());
+  useEffect(() => {
+    return subscribe("counter", {
+      name: "panelComponent",
+      callback: setState,
+    });
+  }, []);
+  useEffect(() => {
+    return saveToLocalStorage(state);
+  });
   return state;
 };
