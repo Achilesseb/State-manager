@@ -2,12 +2,14 @@ import "./App.css";
 import React from "react";
 import PanelComponent from "./PanelComponent/PanelComponent";
 import TestComponent from "./PanelComponent/TestCountComponent";
-import { store } from "./stateManager/eventBus";
+import { store, generateRandomnId } from "./stateManager/eventBus";
 import { incrementCount, decrementCount, reset } from "./stateManager/actions";
 import { usePublishHook } from "./stateManager/usePublishHook";
+import F1Drivers from "./PanelComponent/F1Drivers";
+import F1DriversTest from "./PanelComponent/F1DriversTest";
 function App() {
   const { dispatch } = store;
-  const state = usePublishHook();
+  const state = usePublishHook(generateRandomnId());
   const handleIncrementClick = () => {
     dispatch("counter", state, incrementCount);
   };
@@ -21,7 +23,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="app-container">
-          <button onClick={() => handleIncrementClick()}>+</button>
+          <button onClick={handleIncrementClick}>+</button>
           <span className="app-container-span">
             <span>APP COMPONENT</span>
             <span>
@@ -29,7 +31,7 @@ function App() {
               Count 1 :<span className="counter"> {state.count}</span>
             </span>
           </span>
-          <button onClick={() => handleDecrementClick()}>-</button>
+          <button onClick={handleDecrementClick}>-</button>
         </div>
 
         <PanelComponent />
@@ -38,6 +40,8 @@ function App() {
           RESET
         </button>
       </header>
+      <F1Drivers />
+      <F1DriversTest />
     </div>
   );
 }

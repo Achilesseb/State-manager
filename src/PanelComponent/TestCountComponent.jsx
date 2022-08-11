@@ -1,10 +1,10 @@
 import React from "react";
-import { store } from "../stateManager/eventBus";
+import { store, generateRandomnId } from "../stateManager/eventBus";
 import { incrementCount2, decrementCount2 } from "../stateManager/actions";
 import { usePublishHook } from "../stateManager/usePublishHook";
 const TestComponent = () => {
   const { dispatch } = store;
-  const state = usePublishHook();
+  const state = usePublishHook(generateRandomnId());
   const handleIncrementClick2 = () => {
     dispatch("counter", state, incrementCount2);
   };
@@ -14,7 +14,7 @@ const TestComponent = () => {
 
   return (
     <div className="app-container">
-      <button onClick={() => handleIncrementClick2()}>+</button>
+      <button onClick={handleIncrementClick2}>+</button>
       <span className="app-container-span">
         <span>TEST COMPONENT</span>
         <span>
@@ -22,7 +22,7 @@ const TestComponent = () => {
           Count 2 :<span className="counter"> {state.count2}</span>
         </span>
       </span>
-      <button onClick={() => handleDecrementClick2()}>-</button>
+      <button onClick={handleDecrementClick2}>-</button>
     </div>
   );
 };

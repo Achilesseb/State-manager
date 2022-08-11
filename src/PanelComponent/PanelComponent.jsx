@@ -1,7 +1,8 @@
 import React from "react";
 import { usePublishHook } from "../stateManager/usePublishHook";
+import { generateRandomnId } from "../stateManager/eventBus";
 const PanelComponent = () => {
-  const state = usePublishHook();
+  const state = usePublishHook(generateRandomnId());
   return (
     <div className="app-container">
       <span className="app-container-span">

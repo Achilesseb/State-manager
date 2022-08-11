@@ -20,5 +20,9 @@ export const decrementCount2 = (state) =>
     type: types.DECREMENT_COUNT_2,
     payload: state.count2 - 1,
   });
-
+export const setF1Drivers = (state, response) =>
+  reducer(state, {
+    type: types.SET_F1_DRIVERS,
+    payload: response,
+  });
 export const reset = (state) => reducer(state, { type: "RESET" });
